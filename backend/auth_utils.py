@@ -16,6 +16,9 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24 * 7  # 7 days
 security = HTTPBearer()
 
 def hash_password(password: str) -> str:
+    # Bcrypt has a max length of 72 bytes
+    if len(password) > 72:
+        password = password[:72]
     return pwd_context.hash(password)
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
